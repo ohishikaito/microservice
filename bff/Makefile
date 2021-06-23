@@ -1,3 +1,4 @@
 pb-gen:
-	protoc -I ./protofiles ${s}.proto --go_out=plugins=grpc:./pb
-	protoc -I ./protofiles ${s}.proto --go_out=plugins=grpc:../user
+	protoc -I ./protofiles --go_out=plugins=grpc:./ user.proto
+	protoc -I ./protofiles --go_out=plugins=grpc:../user user.proto
+# api-gatewayでpbで共通定義しても干渉しない？
