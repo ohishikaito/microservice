@@ -28,23 +28,23 @@ func request() {
 	router := gin.Default()
 	conn := newGrpcClientConn()
 	userClient := pb.NewUserServiceClient(conn)
-	userController := NewUserController(userClient)
-	router.GET("/users", userController.GetUsers)
+	client := NewClient(userClient)
+	router.GET("/users", client.GetUsers)
 	router.Run(":" + os.Getenv("PORT"))
 }
 
-type userController struct {
-	userClient pb.UserServiceClient
+type client struct {
+	user pb.UserServiceClient
 }
 
-func NewUserController(userClient pb.UserServiceClient) *userController {
-	return &userController{
-		userClient: userClient,
+func NewClient(userClient pb.UserServiceClient) *client {
+	return &client{
+		user: userClient,
 	}
 }
 
-func (c *userController) GetUsers(ctx *gin.Context) {
-	users, err := c.userClient.GetUsers(context.Background(), &emptypb.Empty{})
+func (c *client) GetUsers(ctx *gin.Context) {
+	users, err := c.user.GetUsers(context.Background(), &emptypb.Empty{})
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"errorMessage": string(err.Error()),
