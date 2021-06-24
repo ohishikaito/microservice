@@ -1,9 +1,9 @@
 package main
 
 import (
+	"app/pb"
 	"context"
 	"fmt"
-	"mircoservice/pb"
 
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -17,7 +17,6 @@ func main() {
 func request() {
 	conn := newGrpcClientConn()
 	client := pb.NewUserServiceClient(conn)
-
 	result, err := client.GetUsers(context.Background(), &emptypb.Empty{})
 	if err != nil {
 		panic(err)
@@ -28,7 +27,9 @@ func request() {
 }
 
 func newGrpcClientConn() *grpc.ClientConn {
-	conn, err := grpc.Dial("user_app_1:50051", grpc.WithInsecure())
+	// targetUrl := os.Getenv("USER_SERVER_NAME") + ":" + os.Getenv("GRPC_SERVER_PORT")
+	targetUrl := "user_app_1:50051"
+	conn, err := grpc.Dial(targetUrl, grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
