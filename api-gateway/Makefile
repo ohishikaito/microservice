@@ -1,4 +1,4 @@
-pb-gen:
-	protoc -I ./protofiles --go_out=plugins=grpc:./ user.proto
-	protoc -I ./protofiles --go_out=plugins=grpc:../user user.proto
-# api-gatewayでpbで共通定義しても干渉しない？
+# modelごとのprotoファイルを作成する e.g. make protoc s=user
+protoc:
+	protoc -I ./protofiles ${s}.proto --go_out=plugins=grpc:./
+	protoc -I ./protofiles ${s}.proto --go_out=plugins=grpc:../${s}
