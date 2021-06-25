@@ -1,22 +1,24 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net"
 	"os"
 	"user/infrastructure"
+	"user/interface/controller"
+	"user/interface/repository"
 	"user/pb"
-
-	"google.golang.org/grpc"
-	"google.golang.org/protobuf/types/known/emptypb"
+	"user/usecase"
 )
 
 func main() {
 	db := infrastructure.NewGormConnect()
-	log.Println(db)
-	userController := NewUserController()
-	grpcServer := grpc.NewServer()
+
+	userRepository := repository.NewUserRepository(db)
+	userUsecase := usecase.NewUserUsecase(userRepository)
+	userController := controller.NewUserController(userUsecase)
+
+	grpcServer := infrastructure.NewGrpcServer()
 	pb.RegisterUserServiceServer(grpcServer, userController)
 
 	listener, err := net.Listen("tcp", ":"+os.Getenv("GRPC_SERVER_PORT")) // [::]:50051
@@ -28,26 +30,4 @@ func main() {
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatal("serve err", err)
 	}
-}
-
-type userController struct {
-	//
-}
-
-func NewUserController() *userController {
-	return &userController{}
-}
-
-func (c *userController) GetUsers(ctx context.Context, req *emptypb.Empty) (*pb.GetUsersResponse, error) {
-	user := &pb.User{
-		Id:        1,
-		LastName:  "大石",
-		FirstName: "海渡",
-	}
-	var users []*pb.User
-	users = append(users, user)
-	pbUsers := &pb.GetUsersResponse{
-		Users: users,
-	}
-	return pbUsers, nil
 }

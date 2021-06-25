@@ -12,19 +12,6 @@ import (
 )
 
 func main() {
-	request()
-}
-
-func newGrpcClientConn() *grpc.ClientConn {
-	targetUrl := os.Getenv("USER_SERVER_NAME") + ":" + os.Getenv("GRPC_SERVER_PORT")
-	conn, err := grpc.Dial(targetUrl, grpc.WithInsecure())
-	if err != nil {
-		panic(err)
-	}
-	return conn
-}
-
-func request() {
 	router := gin.Default()
 	conn := newGrpcClientConn()
 
@@ -39,6 +26,15 @@ func request() {
 	router.GET("/posts", client.GetPosts)
 
 	router.Run(":" + os.Getenv("PORT"))
+}
+
+func newGrpcClientConn() *grpc.ClientConn {
+	targetUrl := os.Getenv("USER_SERVER_NAME") + ":" + os.Getenv("GRPC_SERVER_PORT")
+	conn, err := grpc.Dial(targetUrl, grpc.WithInsecure())
+	if err != nil {
+		panic(err)
+	}
+	return conn
 }
 
 type client struct {
