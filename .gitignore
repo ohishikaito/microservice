@@ -1,2 +1,2 @@
-services/*/tmp/runner-build
+services/*/tmp
 services/*/logfile.log
