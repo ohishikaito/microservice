@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"user/infrastructure"
 	"user/pb"
 
 	"google.golang.org/grpc"
@@ -12,6 +13,8 @@ import (
 )
 
 func main() {
+	db := infrastructure.NewGormConnect()
+	log.Println(db)
 	userController := NewUserController()
 	grpcServer := grpc.NewServer()
 	pb.RegisterUserServiceServer(grpcServer, userController)
