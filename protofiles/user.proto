@@ -55,7 +55,7 @@ message User {
   string first_name = 3;
   string email = 4;
   string telephone_number = 5;
-  uint64 gender = 6;
+  int64 gender = 6;
   google.protobuf.Timestamp created_at = 7;
   google.protobuf.Timestamp updated_at = 8;
 }

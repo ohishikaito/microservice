@@ -10,7 +10,8 @@ type User struct {
 	FirstName       string
 	Email           string
 	TelephoneNumber string
-	Gender          int
+	// 1 = 男性 2 = 女性
+	Gender int64
 
 	CreatedAt time.Time
 	UpdatedAt time.Time

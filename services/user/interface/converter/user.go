@@ -1,6 +1,7 @@
 package converter
 
 import (
+	"fmt"
 	"user/domain"
 	"user/pb"
 
@@ -17,13 +18,16 @@ func ConvertUsers(users []*domain.User) []*pb.User {
 }
 
 func ConvertUser(user *domain.User) *pb.User {
+	fmt.Println(user.Gender)
 	pbUser := &pb.User{
 		Id:              user.Id,
 		LastName:        user.LastName,
 		FirstName:       user.FirstName,
 		Email:           user.Email,
 		TelephoneNumber: user.TelephoneNumber,
-		Gender:          uint64(user.Gender),
+		Gender:          user.Gender,
+		// FIXME: user.Genderが0だったら、pbでjson:omitemptyしてるせいでjsonにGenderが含まれない
+		// Gender: 0,
 		// clientがRailsだとRFC3339に変えるけど、clientがGoだとepoch timeで返してる
 		CreatedAt: timestamppb.New(user.CreatedAt),
 		UpdatedAt: timestamppb.New(user.UpdatedAt),

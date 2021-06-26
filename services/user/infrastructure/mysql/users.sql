@@ -10,8 +10,8 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO users (last_name, first_name, email, telephone_number, gender) VALUES ("ohishi", "kaito", "test1@gmail.com", "09000007777", 0);
-INSERT INTO users (last_name, first_name, email, telephone_number, gender) VALUES ("ohishi", "kaito", "test2@gmail.com", "09000007777", 0);
+INSERT INTO users (last_name, first_name, email, telephone_number, gender) VALUES ("ohishi", "kaito", "test1@gmail.com", "09000007777", 2);
+INSERT INTO users (last_name, first_name, email, telephone_number, gender) VALUES ("ohishi", "kaito", "test2@gmail.com", "09000007777", 2);
 INSERT INTO users (last_name, first_name, email, telephone_number, gender) VALUES ("ohishi", "kaito", "test3@gmail.com", "09000007777", 1);
 INSERT INTO users (last_name, first_name, email, telephone_number, gender) VALUES ("ohishi", "kaito", "test4@gmail.com", "09000007777", 1);
 INSERT INTO users (last_name, first_name, email, telephone_number, gender) VALUES ("ohishi", "kaito", "test5@gmail.com", "09000007777", 1);
