@@ -7,6 +7,7 @@ import (
 
 type PostUsecase interface {
 	GetPosts() ([]*domain.Post, error)
+	GetPostsByUserId(userId int64) ([]*domain.Post, error)
 }
 
 type postUsecase struct {
@@ -21,4 +22,8 @@ func NewPostUsecase(ur repository.PostRepository) *postUsecase {
 
 func (u *postUsecase) GetPosts() ([]*domain.Post, error) {
 	return u.postRepository.GetPosts()
+}
+
+func (u *postUsecase) GetPostsByUserId(userId int64) ([]*domain.Post, error) {
+	return u.postRepository.GetPostsByUserId(userId)
 }

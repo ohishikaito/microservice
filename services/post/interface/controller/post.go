@@ -29,12 +29,13 @@ func (c *postController) GetPosts(ctx context.Context, req *emptypb.Empty) (*pb.
 	}, nil
 }
 
-// func (c *postController) GetPost(ctx context.Context, req *pb.GetPostRequest) (*pb.GetPostResponse, error) {
-// 	post, err := c.postUsecase.GetPostById(req.Id)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return &pb.GetPostResponse{
-// 		Post: converter.ConvertPost(post),
-// 	}, nil
-// }
+func (c *postController) GetPostsByUser(ctx context.Context, req *pb.GetPostsByUserRequest) (*pb.GetPostsByUserResponse, error) {
+	// posts, err := c.postUsecase.GetPosts()
+	posts, err := c.postUsecase.GetPostsByUserId(req.UserId)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.GetPostsByUserResponse{
+		Posts: converter.ConvertPosts(posts),
+	}, nil
+}

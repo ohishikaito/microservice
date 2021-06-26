@@ -8,9 +8,18 @@ option go_package = "./pb";
 
 service PostService {
   rpc GetPosts(google.protobuf.Empty) returns (GetPostsResponse) {}
+  rpc GetPostsByUser(GetPostsByUserRequest) returns (GetPostsByUserResponse) {}
 }
 
 message GetPostsResponse {
+  repeated Post posts = 1;
+}
+
+message GetPostsByUserRequest {
+  int64 user_id = 1;
+}
+
+message GetPostsByUserResponse {
   repeated Post posts = 1;
 }
 
