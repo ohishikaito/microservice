@@ -10,8 +10,7 @@ import (
 )
 
 func NewGrpcServer() *grpc.Server {
-	var zapLogger *zap.Logger
-	zapLogger, _ = zap.NewDevelopment()
+	zapLogger, _ := zap.NewDevelopment()
 
 	grpcServer := grpc.NewServer(
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
