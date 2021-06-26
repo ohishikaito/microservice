@@ -6,12 +6,15 @@ services:
     tty: true
     volumes:
       - ./:/app:cached
-    ports:
-      - 50051:50051
+    # grpcurlを使う時にportsを開放する
+    # ports:
+    #   - 50051:50051
     networks:
       - container-networks
     environment:
       - GRPC_SERVER_PORT=50051
+    depends_on:
+      - db
 
   db:
     image: mysql:8.0
@@ -23,7 +26,7 @@ services:
     volumes:
       - ./infrastructure/mysql:/docker-entrypoint-initdb.d
     ports:
-      - '13306:3306'
+      - '4306:3306'
 
 networks:
   default:
