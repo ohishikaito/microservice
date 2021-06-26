@@ -1,4 +1,4 @@
-module user
+module post
 
 go 1.16
 
