@@ -7,13 +7,13 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func ConvertUsers(users []*domain.User) (*pb.GetUsersResponse, error) {
+func ConvertUsers(users []*domain.User) []*pb.User {
 	var pbUsers []*pb.User
 	for _, user := range users {
 		pbUser := ConvertUser(user)
 		pbUsers = append(pbUsers, pbUser)
 	}
-	return &pb.GetUsersResponse{Users: pbUsers}, nil
+	return pbUsers
 }
 
 func ConvertUser(user *domain.User) *pb.User {
