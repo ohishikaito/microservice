@@ -1,22 +1,27 @@
 package main
 
 import (
-	"app/pb"
+	"api_gateway/infrastructure"
+	"api_gateway/pb"
 	"context"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 func main() {
 	router := gin.Default()
-	conn := newGrpcClientConn()
 
-	userClient := pb.NewUserServiceClient(conn)
-	postClient := pb.NewPostServiceClient(conn)
+	grpcClientConn := infrastructure.NewGrpcClientConn(os.Getenv("USER_SERVER_NAME"))
+	defer grpcClientConn.Close()
+	userClient := pb.NewUserServiceClient(grpcClientConn)
+
+	grpcClientConn = infrastructure.NewGrpcClientConn(os.Getenv("USER_SERVER_NAME"))
+	defer grpcClientConn.Close()
+	postClient := pb.NewPostServiceClient(grpcClientConn)
+
 	client := NewClient(
 		userClient,
 		postClient,
@@ -26,15 +31,6 @@ func main() {
 	router.GET("/posts", client.GetPosts)
 
 	router.Run(":" + os.Getenv("PORT"))
-}
-
-func newGrpcClientConn() *grpc.ClientConn {
-	targetUrl := os.Getenv("USER_SERVER_NAME") + ":" + os.Getenv("GRPC_SERVER_PORT")
-	conn, err := grpc.Dial(targetUrl, grpc.WithInsecure())
-	if err != nil {
-		panic(err)
-	}
-	return conn
 }
 
 type client struct {

@@ -1,2 +1,6 @@
 services/*/tmp
 services/*/logfile.log
+
+.DS_Store
+/services/.DS_Store
+services/*/.DS_Store
