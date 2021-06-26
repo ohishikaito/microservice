@@ -9,6 +9,7 @@ option go_package = "./pb";
 service PostService {
   rpc GetPosts(google.protobuf.Empty) returns (GetPostsResponse) {}
   rpc GetPostsByUser(GetPostsByUserRequest) returns (GetPostsByUserResponse) {}
+  rpc GetPost(GetPostReq) returns (GetPostRes) {}
 }
 
 message GetPostsResponse {
@@ -23,10 +24,27 @@ message GetPostsByUserResponse {
   repeated Post posts = 1;
 }
 
+message GetPostReq {
+  uint64 id = 1;
+}
+
+message GetPostRes {
+  Post post = 1;
+}
+
 message Post {
   uint64 id = 1;
   string text = 2;
   int64 user_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+  repeated PostDetail post_details = 6;
+}
+
+message PostDetail {
+  uint64 id = 1;
+  uint64 post_id = 2;
+  string description = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp updated_at = 5;
 }

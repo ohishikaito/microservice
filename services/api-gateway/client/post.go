@@ -52,3 +52,24 @@ func (c *client) GetUserPosts(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, posts)
 }
+
+func (c *client) GetPost(ctx *gin.Context) {
+	id, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"errorMessage": string(err.Error()),
+		})
+		return
+	}
+	req := &pb.GetPostReq{
+		Id: id,
+	}
+	post, err := c.postClient.GetPost(context.Background(), req)
+	if err != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"errorMessage": string(err.Error()),
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, post)
+}

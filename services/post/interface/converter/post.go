@@ -24,5 +24,17 @@ func ConvertPost(post *domain.Post) *pb.Post {
 		CreatedAt: timestamppb.New(post.CreatedAt),
 		UpdatedAt: timestamppb.New(post.UpdatedAt),
 	}
+	if len(post.PostDetails) > 0 {
+		for _, postDetail := range post.PostDetails {
+			pbPostDetail := &pb.PostDetail{
+				Id:          postDetail.Id,
+				Description: postDetail.Description,
+				PostId:      postDetail.PostId,
+				CreatedAt:   timestamppb.New(postDetail.CreatedAt),
+				UpdatedAt:   timestamppb.New(postDetail.UpdatedAt),
+			}
+			pbPost.PostDetails = append(pbPost.PostDetails, pbPostDetail)
+		}
+	}
 	return pbPost
 }

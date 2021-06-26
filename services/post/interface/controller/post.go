@@ -38,3 +38,13 @@ func (c *postController) GetPostsByUser(ctx context.Context, req *pb.GetPostsByU
 		Posts: converter.ConvertPosts(posts),
 	}, nil
 }
+
+func (c *postController) GetPost(ctx context.Context, req *pb.GetPostReq) (*pb.GetPostRes, error) {
+	post, err := c.postUsecase.GetPostById(req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &pb.GetPostRes{
+		Post: converter.ConvertPost(post),
+	}, nil
+}

@@ -30,6 +30,7 @@ func main() {
 	router.GET("/users/:id", gprcClient.GetUser)
 	router.GET("/users/:id/posts", gprcClient.GetUserPosts)
 	router.GET("/posts", gprcClient.GetPosts)
+	router.GET("/posts/:id", gprcClient.GetPost)
 
 	router.Run(":" + os.Getenv("PORT"))
 }
