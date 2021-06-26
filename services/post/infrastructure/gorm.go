@@ -11,7 +11,7 @@ import (
 
 func NewGormConnect() *gorm.DB {
 	var database string
-	database = "root:finder0501@tcp(user_db_1)/microservices_user_development?charset=utf8&parseTime=true&Asia%2FTokyo"
+	database = "root:finder0501@tcp(post_db_1)/microservices_post_development?charset=utf8&parseTime=true&Asia%2FTokyo"
 
 	db, err := gorm.Open("mysql", database)
 	if err != nil {

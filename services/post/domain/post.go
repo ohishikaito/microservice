@@ -4,13 +4,10 @@ import (
 	"time"
 )
 
-type User struct {
-	Id              uint64 `gorm:"primary_key"`
-	LastName        string
-	FirstName       string
-	Email           string
-	TelephoneNumber string
-	Gender          int
+type Post struct {
+	Id     uint64 `gorm:"primary_key"`
+	Text   string
+	UserId int64
 
 	CreatedAt time.Time
 	UpdatedAt time.Time

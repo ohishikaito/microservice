@@ -16,7 +16,7 @@ func main() {
 	defer grpcClientConn.Close()
 	userClient := pb.NewUserServiceClient(grpcClientConn)
 
-	grpcClientConn = infrastructure.NewGrpcClientConn(os.Getenv("USER_SERVER_NAME"))
+	grpcClientConn = infrastructure.NewGrpcClientConn(os.Getenv("POST_SERVER_NAME"))
 	defer grpcClientConn.Close()
 	postClient := pb.NewPostServiceClient(grpcClientConn)
 

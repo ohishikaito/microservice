@@ -4,22 +4,22 @@ import (
 	"log"
 	"net"
 	"os"
-	"user/infrastructure"
-	"user/interface/controller"
-	"user/interface/repository"
-	"user/pb"
-	"user/usecase"
+	"post/infrastructure"
+	"post/interface/controller"
+	"post/interface/repository"
+	"post/pb"
+	"post/usecase"
 )
 
 func main() {
 	db := infrastructure.NewGormConnect()
 
-	userRepository := repository.NewUserRepository(db)
-	userUsecase := usecase.NewUserUsecase(userRepository)
-	userController := controller.NewUserController(userUsecase)
+	postRepository := repository.NewPostRepository(db)
+	postUsecase := usecase.NewPostUsecase(postRepository)
+	postController := controller.NewPostController(postUsecase)
 
 	grpcServer := infrastructure.NewGrpcServer()
-	pb.RegisterUserServiceServer(grpcServer, userController)
+	pb.RegisterPostServiceServer(grpcServer, postController)
 
 	listener, err := net.Listen("tcp", ":"+os.Getenv("GRPC_SERVER_PORT")) // [::]:50051
 	if err != nil {

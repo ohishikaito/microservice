@@ -1,32 +1,28 @@
 package converter
 
 import (
-	"user/domain"
-	"user/pb"
+	"post/domain"
+	"post/pb"
 
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func ConvertUsers(users []*domain.User) []*pb.User {
-	var pbUsers []*pb.User
-	for _, user := range users {
-		pbUser := ConvertUser(user)
-		pbUsers = append(pbUsers, pbUser)
+func ConvertPosts(posts []*domain.Post) []*pb.Post {
+	var pbPosts []*pb.Post
+	for _, post := range posts {
+		pbPost := ConvertPost(post)
+		pbPosts = append(pbPosts, pbPost)
 	}
-	return pbUsers
+	return pbPosts
 }
 
-func ConvertUser(user *domain.User) *pb.User {
-	pbUser := &pb.User{
-		Id:              user.Id,
-		LastName:        user.LastName,
-		FirstName:       user.FirstName,
-		Email:           user.Email,
-		TelephoneNumber: user.TelephoneNumber,
-		Gender:          uint64(user.Gender),
-		// clientがRailsだとRFC3339に変えるけど、clientがGoだとepoch timeで返してる
-		CreatedAt: timestamppb.New(user.CreatedAt),
-		UpdatedAt: timestamppb.New(user.UpdatedAt),
+func ConvertPost(post *domain.Post) *pb.Post {
+	pbPost := &pb.Post{
+		Id:        post.Id,
+		Text:      post.Text,
+		UserId:    post.UserId,
+		CreatedAt: timestamppb.New(post.CreatedAt),
+		UpdatedAt: timestamppb.New(post.UpdatedAt),
 	}
-	return pbUser
+	return pbPost
 }

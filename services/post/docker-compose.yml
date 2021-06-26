@@ -20,13 +20,13 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: finder0501
-      MYSQL_DATABASE: microservices_user_development
+      MYSQL_DATABASE: microservices_post_development
       TZ: 'Asia/Tokyo'
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./infrastructure/mysql:/docker-entrypoint-initdb.d
     ports:
-      - '4306:3306'
+      - '5306:3306'
 
 networks:
   default:
