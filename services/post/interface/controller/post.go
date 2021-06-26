@@ -30,7 +30,6 @@ func (c *postController) GetPosts(ctx context.Context, req *emptypb.Empty) (*pb.
 }
 
 func (c *postController) GetPostsByUser(ctx context.Context, req *pb.GetPostsByUserRequest) (*pb.GetPostsByUserResponse, error) {
-	// posts, err := c.postUsecase.GetPosts()
 	posts, err := c.postUsecase.GetPostsByUserId(req.UserId)
 	if err != nil {
 		return nil, err
