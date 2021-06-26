@@ -9,6 +9,7 @@ import (
 type PostRepository interface {
 	GetPosts() ([]*domain.Post, error)
 	GetPostsByUserId(userId int64) ([]*domain.Post, error)
+	GetPostById(id uint64) (*domain.Post, error)
 }
 
 type postRepository struct {
@@ -35,4 +36,12 @@ func (r *postRepository) GetPostsByUserId(userId int64) ([]*domain.Post, error) 
 		return nil, err
 	}
 	return posts, nil
+}
+
+func (r *postRepository) GetPostById(id uint64) (*domain.Post, error) {
+	post := &domain.Post{}
+	if err := r.db.Preload("PostDetails").Take(&post, id).Error; err != nil {
+		return nil, err
+	}
+	return post, nil
 }
